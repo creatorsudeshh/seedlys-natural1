@@ -1,0 +1,26 @@
+# macOS and Windows files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editor and temporary files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Dependencies, build output, and logs (not needed for this plain static site)
+node_modules/
+dist/
+build/
+*.log
+
+# Local secrets and environment settings
+.env
+.env.*
+!.env.example
+
+# Synced project references and local workspace instructions
+/sources/
+/AGENTS.md

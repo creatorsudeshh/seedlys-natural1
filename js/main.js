@@ -211,7 +211,12 @@
     art.addEventListener("pointerleave", () => {
       if (toggle?.getAttribute("aria-expanded") !== "true") revealProducts(false);
     });
-    toggle?.addEventListener("click", () => revealProducts(toggle.getAttribute("aria-expanded") !== "true"));
+    toggle?.addEventListener("click", (event) => {
+      // A mouse hover already reveals the panel, so clicking its label should keep it open.
+      // On touch or keyboard, the label acts as a real toggle.
+      const isMouseOrPen = event.pointerType === "mouse" || event.pointerType === "pen";
+      revealProducts(isMouseOrPen || toggle.getAttribute("aria-expanded") !== "true");
+    });
   }
 
   function handleHomeOrderForm(event) {

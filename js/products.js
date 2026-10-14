@@ -34,8 +34,8 @@ window.SEEDLYS_PRODUCTS = [
     category: "powder",
     categoryLabel: "POWDER · PANTRY STAPLE",
     price: null,
-    image: "images/beetroot-powder.svg",
-    imageAlt: "Illustration of beetroot powder with a spoon and fresh beetroot",
+    image: "images/beetroot-powder-product.jpg",
+    imageAlt: "Seedlys Naturals beetroot powder pouch displayed with fresh beetroot and beetroot powder",
     description: "A bright, earthy pantry powder for smoothies, bakes and more.",
     detail: "An easy-to-use powder for adding colour to home recipes. Ask us about ingredients, pack sizes and current availability.",
     ideas: ["Stir into a smoothie", "Try in home baking or a drink", "Ask us about the current pack size"]

@@ -83,8 +83,8 @@ h1, h2, h3, p { margin-top: 0; }
 
 /* Home page hero and featured collection */
 .home-hero { min-height: 650px; padding: 48px 22px 58px; position: relative; display: flex; align-items: center; overflow: hidden; isolation: isolate; background: #f4f0e5; }
-.home-hero::before { content: ''; position: absolute; z-index: -2; inset: -1.5%; background: url('../images/home-hero-premium.jpg') 68% center / cover no-repeat; animation: hero-drift 28s ease-in-out infinite alternate; will-change: transform; }
-.home-hero::after { content: ''; position: absolute; z-index: -1; inset: 0; background: linear-gradient(180deg, rgba(251,252,249,.97) 0%, rgba(251,252,249,.94) 44%, rgba(251,252,249,.48) 74%, rgba(251,252,249,.14) 100%); }
+.home-hero::before { content: ''; position: absolute; z-index: 0; inset: -1.5%; background: url('../images/home-hero-premium.jpg') 68% center / cover no-repeat; animation: hero-drift 28s ease-in-out infinite alternate; will-change: transform; }
+.home-hero::after { content: ''; position: absolute; z-index: 1; inset: 0; background: linear-gradient(180deg, rgba(251,252,249,.97) 0%, rgba(251,252,249,.94) 44%, rgba(251,252,249,.48) 74%, rgba(251,252,249,.14) 100%); }
 .hero-copy { width: min(100%, 570px); position: relative; z-index: 2; animation: hero-copy-enter .9s cubic-bezier(.2,.7,.2,1) both; }
 .hero-copy h1 { margin: 0; color: var(--green-dark); font: 500 clamp(58px, 15vw, 76px)/.98 var(--serif); letter-spacing: -.055em; }
 .hero-intro { max-width: 350px; margin: 19px 0 0; color: #758176; font-size: 12px; line-height: 1.8; }

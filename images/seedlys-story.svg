@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 460" fill="none">
+  <rect width="600" height="460" fill="#dfe9dc"/><circle cx="115" cy="92" r="112" stroke="#adc3aa"/><circle cx="520" cy="390" r="115" stroke="#adc3aa"/><circle cx="452" cy="108" r="46" fill="#c6d8bf"/>
+  <path d="M296 355V166" stroke="#426b49" stroke-width="7" stroke-linecap="round"/><path d="M294 232c-84 0-113-41-113-104 61 0 113 28 113 104Z" fill="#7e9f77"/><path d="M298 195c0-74 52-123 130-132-1 76-41 135-130 151" fill="#557f58"/><path d="M290 288c-54 1-81-24-81-66 43 2 78 20 81 66Z" fill="#97b48c"/><path d="M303 266c0-49 34-80 85-87-1 49-27 88-85 98" fill="#71966c"/><path d="M252 367h95" stroke="#446c4b" stroke-width="7" stroke-linecap="round"/>
+  <text x="69" y="405" fill="#42674a" font-family="Georgia,serif" font-size="21" font-style="italic">Keep it simple. Keep it good.</text>
+</svg>

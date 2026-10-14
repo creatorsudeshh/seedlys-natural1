@@ -21,8 +21,8 @@ window.SEEDLYS_PRODUCTS = [
     category: "tea",
     categoryLabel: "TEA · SLOW MOMENTS",
     price: null,
-    image: "images/blue-tea.svg",
-    imageAlt: "Illustration of blue tea served in a clear glass cup with flowers",
+    image: "images/blue-tea-product.jpg",
+    imageAlt: "Seedlys Naturals blue tea jar beside a cup of blue butterfly pea tea and dried flowers",
     description: "A vivid, gentle brew for a slow morning or a refreshing iced pour.",
     detail: "Make space for a colourful cup whenever the day allows. Message us for ingredient details and current pack sizes.",
     ideas: ["Enjoy warm or over ice", "Ask us for simple brewing details", "Confirm ingredients with us before ordering"]

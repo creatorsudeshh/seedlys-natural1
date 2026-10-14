@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+  <rect width="160" height="160" rx="4" fill="#fff"/>
+  <g fill="#d7e2d4"><path d="M10 10h39v39H10zM111 10h39v39h-39zM10 111h39v39H10z"/><path d="M58 10h8v8h-8zm16 0h8v8h-8zm16 0h8v8h-8zM58 26h8v8h-8zm24 0h8v8h-8zm-24 16h8v8h-8zm16 0h8v8h-8zm37 16h8v8h-8zm16 0h8v8h-8zm16 0h8v8h-8zm-91 8h8v8h-8zm16 0h8v8h-8zm32 0h8v8h-8zm32 0h8v8h-8zM10 58h8v8h-8zm16 0h8v8h-8zm16 0h8v8h-8zm16 16h8v8h-8zm16 0h8v8h-8zm16 0h8v8h-8zm32 0h8v8h-8zm-91 16h8v8h-8zm16 0h8v8h-8zm32 0h8v8h-8zm16 0h8v8h-8zm32 0h8v8h-8zM58 106h8v8h-8zm16 0h8v8h-8zm16 0h8v8h-8zm32 0h8v8h-8zm16 0h8v8h-8zm-80 16h8v8h-8zm32 0h8v8h-8zm16 0h8v8h-8zm16 0h8v8h-8zm32 0h8v8h-8zm-64 16h8v8h-8zm32 0h8v8h-8zm16 0h8v8h-8zm-32 10h8v8h-8z"/></g>
+  <g fill="#f7faf5"><path d="M17 17h25v25H17zM118 17h25v25h-25zM17 118h25v25H17z"/><path d="M23 23h13v13H23zm101 0h13v13h-13zm-101 101h13v13H23z"/></g>
+  <rect x="44" y="57" width="72" height="45" rx="3" fill="#fff" stroke="#a9bda8" stroke-width="2"/><text x="80" y="76" text-anchor="middle" fill="#2e5d43" font-family="Arial,sans-serif" font-size="8" font-weight="700">QR PLACEHOLDER</text><text x="80" y="89" text-anchor="middle" fill="#758575" font-family="Arial,sans-serif" font-size="6">REPLACE BEFORE USE</text>
+</svg>

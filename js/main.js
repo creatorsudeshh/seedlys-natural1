@@ -147,6 +147,88 @@
     window.open(url, "_blank", "noopener,noreferrer");
   }
 
+  function setUpHomeHero() {
+    const copy = document.querySelector(".hero-copy");
+    const art = document.querySelector("[data-hero-art]");
+    const title = document.querySelector("[data-hero-title]");
+    const intro = document.querySelector("[data-hero-intro]");
+    const signoff = document.querySelector("[data-hero-signoff]");
+    const next = document.querySelector("[data-hero-next]");
+    const toggle = document.querySelector("[data-hero-toggle]");
+    const popups = document.querySelector("[data-hero-popups]");
+    if (!copy || !art || !title || !intro || !signoff || !next) return;
+
+    // Keep the rotating home-page lines easy to change in one place.
+    const moments = [
+      { title: "A thoughtful<br />little pantry.", intro: "Three everyday favourites, chosen to bring a little more colour and character to your table.", signoff: "Small details. Everyday rituals." },
+      { title: "A little crunch.<br />A lot of joy.", intro: "Golden garlic chips bring a crisp, savoury touch to snack breaks and everyday meals.", signoff: "A good little crunch, whenever you need it." },
+      { title: "Make room for<br />a blue moment.", intro: "Settle into a vivid cup of blue tea, poured slowly and enjoyed just as you like it.", signoff: "A softer pause in a busy day." },
+      { title: "Colour, straight<br />from the earth.", intro: "Beetroot powder adds an earthy burst of colour to smoothies, bakes and more.", signoff: "A bright touch for everyday rituals." }
+    ];
+    let momentIndex = 0;
+    let timer;
+
+    function showMoment(index) {
+      momentIndex = index % moments.length;
+      const moment = moments[momentIndex];
+      copy.classList.add("is-changing");
+      window.setTimeout(() => {
+        title.innerHTML = moment.title;
+        intro.textContent = moment.intro;
+        signoff.innerHTML = `<span aria-hidden="true">✳</span> ${moment.signoff}`;
+        copy.classList.remove("is-changing");
+      }, 170);
+    }
+
+    function restartTimer() {
+      window.clearInterval(timer);
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        timer = window.setInterval(() => showMoment(momentIndex + 1), 7500);
+      }
+    }
+
+    next.addEventListener("click", () => { showMoment(momentIndex + 1); restartTimer(); });
+    restartTimer();
+
+    function revealProducts(reveal) {
+      art.classList.toggle("is-exploring", reveal);
+      if (toggle) toggle.setAttribute("aria-expanded", String(reveal));
+      if (popups) popups.setAttribute("aria-hidden", String(!reveal));
+    }
+
+    art.addEventListener("pointerenter", (event) => {
+      if (event.pointerType !== "touch" && toggle?.getAttribute("aria-expanded") !== "true") revealProducts(true);
+    });
+    art.addEventListener("pointermove", (event) => {
+      if (event.pointerType === "touch") return;
+      const bounds = art.getBoundingClientRect();
+      const popupHalfWidth = Math.min(170, bounds.width / 2 - 8);
+      const x = Math.max(popupHalfWidth + 8, Math.min(bounds.width - popupHalfWidth - 8, event.clientX - bounds.left));
+      const y = Math.max(43, Math.min(bounds.height - 43, event.clientY - bounds.top));
+      art.style.setProperty("--cursor-x", `${x}px`);
+      art.style.setProperty("--cursor-y", `${y}px`);
+    });
+    art.addEventListener("pointerleave", () => {
+      if (toggle?.getAttribute("aria-expanded") !== "true") revealProducts(false);
+    });
+    toggle?.addEventListener("click", () => revealProducts(toggle.getAttribute("aria-expanded") !== "true"));
+  }
+
+  function handleHomeOrderForm(event) {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    const message = [
+      "Hello Seedlys Naturals! I’d like to enquire about an order.",
+      `Name: ${form.get("name").trim()}`,
+      `Phone: ${form.get("phone").trim()}`,
+      `Delivery address: ${form.get("address").trim()}`,
+      `Interested in: ${form.get("product")}`,
+      "Please confirm availability, price and delivery. Thank you!"
+    ].join("\n");
+    // Continue in the same tab so the form really redirects to WhatsApp.
+    window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  }
+
   function handleCheckout(event) {
     event.preventDefault();
     if (!cart.length) return;
@@ -228,6 +310,7 @@
   document.querySelectorAll("[data-year]").forEach((node) => { node.textContent = new Date().getFullYear(); });
   renderProductGrids();
   renderProductPage();
+  setUpHomeHero();
   updateCartCounts();
   renderCartPage();
   setUpFilters();
@@ -235,5 +318,6 @@
   setUpClicks();
   document.querySelector("[data-checkout-form]")?.addEventListener("submit", handleCheckout);
   document.querySelector("[data-contact-form]")?.addEventListener("submit", handleContactForm);
+  document.querySelector("[data-home-order-form]")?.addEventListener("submit", handleHomeOrderForm);
   window.addEventListener("storage", () => { cart = readCart(); updateCartCounts(); renderCartPage(); });
 })();

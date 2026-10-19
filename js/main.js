@@ -43,8 +43,8 @@
     document.querySelectorAll("[data-cart-count]").forEach((node) => { node.textContent = itemCount(); });
   }
 
-  function productCard(product) {
-    return `<article class="product-card" data-category="${product.category}">
+  function productCard(product, index = 0) {
+    return `<article class="product-card" data-category="${product.category}" style="--card-delay:${index * 95}ms">
       <a class="product-image" href="product.html?id=${encodeURIComponent(product.id)}" aria-label="View ${product.name} details">
         <span class="product-category">${product.categoryLabel}</span>
         <img src="${product.image}" alt="${product.imageAlt}" loading="lazy" />
@@ -61,7 +61,7 @@
       let list = [...products];
       if (kind === "featured" && list.length > 3) list = list.slice(0, 3);
       if (kind === "related") list = list.filter((item) => item.id !== new URLSearchParams(location.search).get("id")).slice(0, 2);
-      grid.innerHTML = list.map(productCard).join("");
+      grid.innerHTML = list.map((product, index) => productCard(product, index)).join("");
     });
   }
 
@@ -229,6 +229,39 @@
     });
   }
 
+  // On larger screens, the soft glass highlight follows the link under the pointer or keyboard focus.
+  function setUpGlassNavigation() {
+    const nav = document.querySelector(".primary-nav");
+    if (!nav) return;
+    const links = [...nav.querySelectorAll("a")];
+    if (!links.length) return;
+    const current = nav.querySelector("a.is-current") || links[0];
+    const desktop = window.matchMedia("(min-width: 900px)");
+
+    function moveGlassTo(link) {
+      if (!desktop.matches || !link) return;
+      const navBounds = nav.getBoundingClientRect();
+      const linkBounds = link.getBoundingClientRect();
+      nav.style.setProperty("--glass-left", `${linkBounds.left - navBounds.left - 12}px`);
+      nav.style.setProperty("--glass-width", `${linkBounds.width + 24}px`);
+      nav.style.setProperty("--glass-opacity", "1");
+    }
+
+    function syncGlass() {
+      if (desktop.matches) moveGlassTo(nav.querySelector("a:focus") || current);
+      else nav.style.setProperty("--glass-opacity", "0");
+    }
+
+    links.forEach((link) => {
+      link.addEventListener("pointerenter", () => moveGlassTo(link));
+      link.addEventListener("focus", () => moveGlassTo(link));
+    });
+    nav.addEventListener("pointerleave", () => moveGlassTo(nav.querySelector("a:focus") || current));
+    window.addEventListener("resize", syncGlass);
+    desktop.addEventListener?.("change", syncGlass);
+    requestAnimationFrame(syncGlass);
+  }
+
   function setUpClicks() {
     document.addEventListener("click", (event) => {
       const addButton = event.target.closest("[data-add-to-cart]");
@@ -247,6 +280,7 @@
   renderCartPage();
   setUpFilters();
   setUpNavigation();
+  setUpGlassNavigation();
   setUpClicks();
   document.querySelector("[data-checkout-form]")?.addEventListener("submit", handleCheckout);
   document.querySelector("[data-contact-form]")?.addEventListener("submit", handleContactForm);

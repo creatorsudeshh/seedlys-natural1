@@ -213,6 +213,52 @@
     }));
   }
 
+  function setUpHeroSlider() {
+    const slider = document.querySelector("[data-hero-slider]");
+    const track = slider?.querySelector("[data-hero-track]");
+    if (!slider || !track) return;
+    const slides = [...track.querySelectorAll(".hero-slide")];
+    const dots = [...slider.querySelectorAll("[data-hero-dot]")];
+    const current = slider.querySelector("[data-hero-current]");
+    if (slides.length < 2) return;
+
+    let activeIndex = Math.max(0, slides.findIndex((slide) => !slide.hasAttribute("aria-hidden")));
+    let touchStartX = null;
+
+    function showSlide(index) {
+      activeIndex = (index + slides.length) % slides.length;
+      track.style.transform = `translateX(-${activeIndex * 100}%)`;
+      slides.forEach((slide, slideIndex) => {
+        const active = slideIndex === activeIndex;
+        slide.toggleAttribute("aria-hidden", !active);
+        slide.inert = !active;
+      });
+      dots.forEach((dot, dotIndex) => {
+        const active = dotIndex === activeIndex;
+        dot.classList.toggle("is-active", active);
+        if (active) dot.setAttribute("aria-current", "true");
+        else dot.removeAttribute("aria-current");
+      });
+      if (current) current.textContent = String(activeIndex + 1).padStart(2, "0");
+    }
+
+    slider.querySelector("[data-hero-prev]")?.addEventListener("click", () => showSlide(activeIndex - 1));
+    slider.querySelector("[data-hero-next]")?.addEventListener("click", () => showSlide(activeIndex + 1));
+    dots.forEach((dot, dotIndex) => dot.addEventListener("click", () => showSlide(dotIndex)));
+    slider.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") { event.preventDefault(); showSlide(activeIndex - 1); }
+      if (event.key === "ArrowRight") { event.preventDefault(); showSlide(activeIndex + 1); }
+    });
+    slider.addEventListener("touchstart", (event) => { touchStartX = event.changedTouches[0]?.clientX ?? null; }, { passive: true });
+    slider.addEventListener("touchend", (event) => {
+      if (touchStartX === null) return;
+      const delta = (event.changedTouches[0]?.clientX ?? touchStartX) - touchStartX;
+      touchStartX = null;
+      if (Math.abs(delta) > 48) showSlide(activeIndex + (delta < 0 ? 1 : -1));
+    }, { passive: true });
+    showSlide(activeIndex);
+  }
+
   function setUpNavigation() {
     const toggle = document.querySelector(".menu-toggle");
     const nav = document.querySelector(".primary-nav");
@@ -278,6 +324,7 @@
   renderProductPage();
   updateCartCounts();
   renderCartPage();
+  setUpHeroSlider();
   setUpFilters();
   setUpNavigation();
   setUpGlassNavigation();

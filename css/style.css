@@ -159,6 +159,8 @@ h1, h2, h3, p { margin-top: 0; }
 .featured-section .product-slider { max-width: 1040px; margin: 0 auto; }
 .featured-section [data-product-slider-track] { position: relative; min-height: 500px; display: block; overflow: hidden; isolation: isolate; }
 .featured-section .product-card { position: absolute; top: 47%; left: calc(50% + var(--slide-offset, 0%)); width: var(--slide-width, 31%); transform: translate(-50%, -50%) scale(var(--slide-scale, .8)); opacity: .68; z-index: 1; transition: left .55s cubic-bezier(.22,.61,.36,1), width .55s cubic-bezier(.22,.61,.36,1), transform .55s cubic-bezier(.22,.61,.36,1), opacity .4s ease, box-shadow .3s ease; }
+.featured-section .product-card { --slide-width: 31%; --slide-scale: .82; }
+.featured-section .product-card.is-active { --slide-width: 42%; --slide-scale: 1; }
 .featured-section .product-card.is-active { z-index: 2; opacity: 1; }
 .featured-section .product-card:not(.is-active):hover { z-index: 3; }
 .featured-section .product-card.is-active:hover { transform: translate(-50%, -50%) scale(1.015); }

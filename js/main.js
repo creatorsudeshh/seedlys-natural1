@@ -259,6 +259,53 @@
     showSlide(activeIndex);
   }
 
+  function setUpProductSlider() {
+    const slider = document.querySelector("[data-product-slider]");
+    const track = slider?.querySelector("[data-product-slider-track]");
+    if (!slider || !track) return;
+    const cards = [...track.querySelectorAll(".product-card")];
+    const dots = [...slider.querySelectorAll("[data-product-dot]")];
+    if (cards.length < 2) return;
+
+    let activeIndex = 0;
+    let touchStartX = null;
+    function showProduct(index) {
+      activeIndex = (index + cards.length) % cards.length;
+      cards.forEach((card, cardIndex) => {
+        let offset = cardIndex - activeIndex;
+        if (offset > cards.length / 2) offset -= cards.length;
+        if (offset < -cards.length / 2) offset += cards.length;
+        card.style.setProperty("--slide-offset", `${offset * 32}%`);
+        card.classList.toggle("is-active", cardIndex === activeIndex);
+        card.dataset.position = String(offset);
+        card.setAttribute("aria-hidden", String(Math.abs(offset) > 1));
+        card.inert = Math.abs(offset) > 1;
+      });
+      dots.forEach((dot, dotIndex) => {
+        const active = dotIndex === activeIndex;
+        dot.classList.toggle("is-active", active);
+        if (active) dot.setAttribute("aria-current", "true");
+        else dot.removeAttribute("aria-current");
+      });
+    }
+
+    slider.querySelector("[data-product-prev]")?.addEventListener("click", () => showProduct(activeIndex - 1));
+    slider.querySelector("[data-product-next]")?.addEventListener("click", () => showProduct(activeIndex + 1));
+    dots.forEach((dot, dotIndex) => dot.addEventListener("click", () => showProduct(dotIndex)));
+    slider.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") { event.preventDefault(); showProduct(activeIndex - 1); }
+      if (event.key === "ArrowRight") { event.preventDefault(); showProduct(activeIndex + 1); }
+    });
+    slider.addEventListener("touchstart", (event) => { touchStartX = event.changedTouches[0]?.clientX ?? null; }, { passive: true });
+    slider.addEventListener("touchend", (event) => {
+      if (touchStartX === null) return;
+      const delta = (event.changedTouches[0]?.clientX ?? touchStartX) - touchStartX;
+      touchStartX = null;
+      if (Math.abs(delta) > 48) showProduct(activeIndex + (delta < 0 ? 1 : -1));
+    }, { passive: true });
+    showProduct(activeIndex);
+  }
+
   function setUpNavigation() {
     const toggle = document.querySelector(".menu-toggle");
     const nav = document.querySelector(".primary-nav");
@@ -321,6 +368,7 @@
 
   document.querySelectorAll("[data-year]").forEach((node) => { node.textContent = new Date().getFullYear(); });
   renderProductGrids();
+  setUpProductSlider();
   renderProductPage();
   updateCartCounts();
   renderCartPage();

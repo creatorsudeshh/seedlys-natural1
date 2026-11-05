@@ -8,7 +8,7 @@ window.SEEDLYS_PRODUCTS = [
     category: "savoury",
     categoryLabel: "SAVOURY · PANTRY",
     price: null,
-    image: "images/garlic-chips-logo-corrected.jpg",
+    image: "images/garlic-chips-product-v2.jpg?v=20261105-garlic-refresh",
     imageAlt: "Seedlys Naturals garlic chips pouch with golden garlic chips and fresh garlic",
     description: "Crisp, savoury garlic to add a little something to snacks and everyday meals.",
     detail: "A familiar pantry favourite with a satisfying crunch. Ask us about current pack sizes, ingredients and availability.",
